@@ -1,0 +1,25 @@
+<html><body>
+<h2>Hyperedge Animation</h2>
+<img id='anim' width='500'><br>
+<script>
+let frames = [
+  'non_targ_order3/edge_0000.png',
+  'non_targ_order3/edge_0001.png',
+  'non_targ_order3/edge_0002.png',
+  'non_targ_order3/edge_0003.png',
+  'non_targ_order3/edge_0004.png',
+  'non_targ_order3/edge_0005.png',
+  'non_targ_order3/edge_0006.png',
+  'non_targ_order3/edge_0007.png',
+  'non_targ_order3/edge_0008.png',
+  'non_targ_order3/edge_0009.png',
+];
+
+let i = 0;
+function update() {
+    document.getElementById('anim').src = frames[i];
+    i = (i + 1) % frames.length;
+}
+setInterval(update, 500);
+</script>
+</body></html>
