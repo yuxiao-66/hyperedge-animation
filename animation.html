@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Target hyperedges Animation</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 16px; }
+    .row { display: flex; gap: 12px; align-items: center; margin-top: 10px; }
+    button { padding: 6px 10px; }
+    input[type="range"] { width: 260px; }
+    .meta { margin-top: 8px; color: #444; }
+  </style>
+</head>
+<body>
+  <h2>Target hyperedges Animation</h2>
+
+  <img id="anim" width="600" alt="frames"><div class="meta" id="meta"></div>
+
+  <div class="row">
+    <button id="toggle">Pause</button>
+    <button id="prev">Prev</button>
+    <button id="next">Next</button>
+    <label>Speed:</label>
+    <input id="speed" type="range" min="1" max="20" value="5">
+    <span id="fpsLabel">5 fps</span>
+  </div>
+
+<script>
+let frames = [
+  'target_0000.png',
+  'target_0001.png',
+  'target_0002.png',
+  'target_0003.png',
+  'target_0004.png',
+  'target_0005.png',
+  'target_0006.png',
+  'target_0007.png',
+  'target_0008.png',
+  'target_0009.png',
+  'target_0010.png',
+  'target_0011.png',
+  'target_0012.png',
+  'target_0013.png',
+  'target_0014.png'
+];
+
+let i = 0;
+let timer = null;
+let playing = true;
+
+function showFrame() {
+  const img = document.getElementById('anim');
+  img.src = frames[i];
+  document.getElementById('meta').innerText = `Frame ${i+1} / ${frames.length}: ${frames[i]}`;
+}
+
+function start() {
+  stop();
+  const fps = parseInt(document.getElementById('speed').value);
+  const interval = Math.floor(1000 / fps);
+  timer = setInterval(() => {
+    i = (i + 1) % frames.length;
+    showFrame();
+  }, interval);
+}
+
+function stop() {
+  if (timer) clearInterval(timer);
+  timer = null;
+}
+
+document.getElementById('toggle').onclick = () => {
+  playing = !playing;
+  document.getElementById('toggle').innerText = playing ? 'Pause' : 'Play';
+  if (playing) start(); else stop();
+};
+
+document.getElementById('prev').onclick = () => {
+  i = (i - 1 + frames.length) % frames.length;
+  showFrame();
+};
+
+document.getElementById('next').onclick = () => {
+  i = (i + 1) % frames.length;
+  showFrame();
+};
+
+document.getElementById('speed').oninput = (e) => {
+  const fps = parseInt(e.target.value);
+  document.getElementById('fpsLabel').innerText = `${fps} fps`;
+  if (playing) start();
+};
+
+showFrame();
+start();
+</script>
+</body>
+</html>
